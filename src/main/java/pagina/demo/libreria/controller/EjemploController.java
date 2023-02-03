@@ -1,11 +1,14 @@
 package pagina.demo.libreria.controller;
 
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import pagina.demo.libreria.dto.AutorDto;
+import pagina.demo.libreria.servicios.AutorServicio;
 import pagina.demo.libreria.servicios.EjemploService;
 
 /**
@@ -21,8 +24,11 @@ public class EjemploController {
 
   private final EjemploService ejemploService;
 
-  public EjemploController(EjemploService ejemploService) {
+  private final AutorServicio autorServicio;
+
+  public EjemploController(EjemploService ejemploService, AutorServicio autorServicio) {
     this.ejemploService = ejemploService;
+    this.autorServicio = autorServicio;
   }
 
   /**
@@ -47,5 +53,10 @@ public class EjemploController {
   @GetMapping
   public String callMethod2(@RequestParam String param1, @RequestParam String param2){
     return ejemploService.metodo2(param1, param2);
+  }
+
+  @GetMapping("/autor")
+  public List<AutorDto> findAll(){
+    return autorServicio.findAll();
   }
 }
